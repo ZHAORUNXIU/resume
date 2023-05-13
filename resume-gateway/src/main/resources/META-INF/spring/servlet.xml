@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+       default-autowire="byName">
+
+    <bean id="propertyPlaceholder" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"/>
+
+    <bean id="environment" class="com.x.resume.common.model.Environment">
+        <property name="env" value="${spring.profiles.active}"/>
+    </bean>
+
+    <bean class="com.x.resume.gateway.filter.ReqContextFilter"/>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5242880"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.x.resume.gateway.web.OpenAccessInterceptor"/>
+        </mvc:interceptor>
+<!--        <bean class="com.x.resume.gateway.traffic.TrafficInterceptor"/>-->
+    </mvc:interceptors>
+
+    <bean id="fastJsonConfig" class="com.alibaba.fastjson.support.config.FastJsonConfig">
+        <property name="serializerFeatures" value="WriteMapNullValue"/>
+    </bean>
+
+    <bean id="messageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+        <property name="supportedMediaTypes" value="application/json"/>
+        <property name="defaultCharset" value="utf-8"/>
+        <property name="fastJsonConfig" ref="fastJsonConfig"/>
+    </bean>
+
+    <bean id="returnValueHandler" class="com.x.resume.common.i18n.context.I18nResponseBodyMethodProcessor">
+        <constructor-arg ref="messageConverter"/>
+    </bean>
+
+    <bean id="handlerMapping"
+          class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="useSuffixPatternMatch" value="false"/>
+        <property name="useTrailingSlashMatch" value="false"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters" ref="messageConverter"/>
+        <property name="returnValueHandlers">
+            <list>
+                <ref bean="returnValueHandler"/>
+            </list>
+        </property>
+        <property name="webBindingInitializer" ref="webBindingInitializer"/>
+    </bean>
+
+    <bean name="webBindingInitializer"
+          class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+        <property name="validator" ref="validator"/>
+    </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+<!--        <property name="validationMessageSource" ref="messageSource"/>-->
+        <property name="validationPropertyMap">
+            <util:map>
+                <entry key="hibernate.validator.fail_fast" value="true"/>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+        <property name="validator" ref="validator"/>
+    </bean>
+
+    <!-- cors相关 -->
+    <bean id="defaultCorsConfig" class="com.x.resume.gateway.web.CorsDomainConfiguration">
+        <property name="maxAge" value="864000"/>
+        <property name="allowedOrigins" value="#{'${cors.allowedOrigins.default}'.split(',')}"/>
+        <property name="allowedMethods" value="*"/>
+        <property name="allowedHeaders" value="*"/>
+    </bean>
+
+    <!-- cors相关 -->
+    <bean id="corsConfigSource" class="org.springframework.web.cors.UrlBasedCorsConfigurationSource">
+        <property name="corsConfigurations">
+            <util:map map-class="java.util.LinkedHashMap">
+                <entry key="/**" value-ref="defaultCorsConfig"/>
+            </util:map>
+        </property>
+    </bean>
+
+</beans>

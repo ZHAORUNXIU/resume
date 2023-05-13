@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://dubbo.apache.org/schema/dubbo
+       http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="resume-gateway"/>
+    <dubbo:registry protocol="zookeeper" address="${deploy.zookeeper}" check="false"/>
+    <dubbo:consumer timeout="${dubbo.timeout}" retries="0" check="false" group="${dubbo.group.resume.name}" version="${dubbo.group.resume.version}"/>
+
+    <!-- user -->
+    <dubbo:reference group="${dubbo.group.resume.name}" id="userService" interface="com.x.resume.api.user.UserService"/>
+</beans>

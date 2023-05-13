@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+    <!-- master -->
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg>
+            <bean class="com.zaxxer.hikari.HikariConfig">
+                <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+                <property name="jdbcUrl" value="${db.master.url}"/>
+                <property name="username" value="${db.master.user}"/>
+                <property name="password" value="${db.master.password}"/>
+                <property name="connectionTestQuery" value="select 1"/>
+                <property name="connectionTimeout" value="${db.connectionTimeout}"/>
+                <property name="minimumIdle" value="${db.minIdle}"/>
+                <property name="maximumPoolSize" value="${db.maxPoolSize}"/>
+                <property name="dataSourceProperties">
+                    <map>
+                        <entry key="cachePrepStmts" value="true"/>
+                        <entry key="prepStmtCacheSize" value="${db.prepStmtCacheSize}"/>
+                        <entry key="prepStmtCacheSqlLimit" value="${db.prepStmtCacheSqlLimit}"/>
+                    </map>
+                </property>
+            </bean>
+        </constructor-arg>
+    </bean>
+<!--    <tx:annotation-driven proxy-target-class="true"/>-->
+</beans>

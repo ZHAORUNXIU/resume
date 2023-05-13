@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <!--JPA 配置 start-->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          primary="true">
+        <!-- 指定数据源 -->
+        <property name="persistenceUnitName" value="master"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="persistenceProvider" ref="persistenceProvider"/>
+
+        <!-- 指定Entity实体类包路径 -->
+        <property name="packagesToScan" value="com.x.resume.model.domain"/>
+        <!-- 指定Jpa持久化实现厂商类-->
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="false"/>
+                <property name="database" value="MYSQL"/>
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQL57Dialect"/>
+                <property name="showSql" value="false"/>
+            </bean>
+        </property>
+        <!-- 指定JPA属性-->
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.default_batch_fetch_size" value="4"/>
+                <entry key="hibernate.max_fetch_depth" value="1"/>
+                <entry key="hibernate.generate_statistics" value="false"/>
+                <entry key="hibernate.bytecode.use_reflection_optimizer" value="false"/>
+                <entry key="hibernate.cache.use_query_cache" value="false"/>
+                <entry key="hibernate.cache.use_second_level_cache" value="false"/>
+
+                <!--数据库字段名称映射规则 acb_id自动转abcId-->
+                <entry key="hibernate.implicit_naming_strategy"
+                       value="org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"/>
+                <entry key="hibernate.physical_naming_strategy"
+                       value="org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy"/>
+                <entry key="hibernate.hbm2ddl.auto" value="none"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="persistenceProvider" class="org.hibernate.jpa.HibernatePersistenceProvider"/>
+
+    <!-- repository包-->
+    <jpa:repositories
+            base-class="com.x.resume.core.repository.BaseRepositoryImpl"
+            base-package="com.x.resume.provider.repository"
+            transaction-manager-ref="transactionManager"
+            entity-manager-factory-ref="entityManagerFactory"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" primary="true">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="masterTransactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+</beans>
