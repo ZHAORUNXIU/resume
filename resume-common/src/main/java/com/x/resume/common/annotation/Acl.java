@@ -1,4 +1,4 @@
-package com.x.resume.annotation;
+package com.x.resume.common.annotation;
 
 import java.lang.annotation.*;
 

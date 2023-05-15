@@ -1,12 +1,11 @@
 package com.x.resume.common.repository;
 
 import com.google.common.collect.Maps;
-import com.x.resume.annotation.CreatedAt;
-import com.x.resume.annotation.UpdatedAt;
+import com.x.resume.common.annotation.CreatedAt;
+import com.x.resume.common.annotation.UpdatedAt;
 import com.x.resume.common.util.DateUtil;
 import com.x.resume.common.util.Log;
 import com.x.resume.common.util.Text;
-import com.x.resume.model.vo.common.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

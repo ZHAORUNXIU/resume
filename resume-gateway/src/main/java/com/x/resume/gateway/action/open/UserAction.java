@@ -1,6 +1,6 @@
 package com.x.resume.gateway.action.open;
 
-import com.x.resume.annotation.Acl;
+import com.x.resume.common.annotation.Acl;
 import com.x.resume.api.user.UserService;
 import com.x.resume.common.web.ReqContext;
 import com.x.resume.gateway.req.user.*;

@@ -1,7 +1,7 @@
 package com.x.resume.model.domain.user;
 
-import com.x.resume.annotation.CreatedAt;
-import com.x.resume.annotation.UpdatedAt;
+import com.x.resume.common.annotation.CreatedAt;
+import com.x.resume.common.annotation.UpdatedAt;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
