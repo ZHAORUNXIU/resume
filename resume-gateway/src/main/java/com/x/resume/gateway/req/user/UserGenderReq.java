@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
  * 用户性别设置请求参数
  *
  * @author runxiu.zhao
- * @date 2023-02-22 14:00:00
+ * @date 2023-05-20 16:00:00
  */
 public class UserGenderReq {
 

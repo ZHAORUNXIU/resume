@@ -1,6 +1,7 @@
 package com.x.resume.gateway.traffic;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.x.resume.common.constant.Code;
 import com.x.resume.common.i18n.utils.I18nHelper;
 import com.x.resume.common.web.ReqContext;
 import com.x.resume.common.model.Result;

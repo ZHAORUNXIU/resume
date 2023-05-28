@@ -24,9 +24,6 @@ public class ReqContextFilter extends OncePerRequestFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ReqContextFilter.class);
 
-    @Value("${app.tokenPrefix}")
-    private String tokenPrefix;
-
     @Resource
     private LocaleResolver localeResolver;
 

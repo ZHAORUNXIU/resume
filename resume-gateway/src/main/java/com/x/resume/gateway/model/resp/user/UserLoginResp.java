@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserLoginResp implements Serializable {
 
-    private Long uid;
+    private Long userId;
 
     private String token;
 
@@ -12,12 +12,12 @@ public class UserLoginResp implements Serializable {
 
     private Integer expireTime;
 
-    public Long getUid() {
-        return uid;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUid(Long uid) {
-        this.uid = uid;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getToken() {

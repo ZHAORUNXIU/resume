@@ -46,7 +46,7 @@
 
     <!-- repository包-->
     <jpa:repositories
-            base-class="com.x.resume.core.repository.BaseRepositoryImpl"
+            base-class="com.x.resume.common.repository.BaseRepositoryImpl"
             base-package="com.x.resume.provider.repository"
             transaction-manager-ref="transactionManager"
             entity-manager-factory-ref="entityManagerFactory"/>

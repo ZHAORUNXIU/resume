@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 用户
  *
  * @author runxiu.zhao
- * @date 2023-02-21 10:00:00
+ * @date 2023-05-20 16:00:00
  */
 @DynamicInsert
 @DynamicUpdate
@@ -31,22 +31,10 @@ public class UserDO implements Serializable {
     private Long id;
 
     /**
-     * uid
+     * userId
      */
-    @Column(name = "f_uid")
-    private Long uid;
-
-    /**
-     * 用户名
-     */
-    @Column(name = "f_user_name")
-    private String userName;
-
-    /**
-     * 昵称
-     */
-    @Column(name = "f_nick_name")
-    private String nickName;
+    @Column(name = "f_user_id")
+    private Long userId;
 
     /**
      * 真实姓名
@@ -124,28 +112,12 @@ public class UserDO implements Serializable {
         this.id = id;
     }
 
-    public Long getUid() {
-        return uid;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUid(Long uid) {
-        this.uid = uid;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getRealName() {

@@ -83,7 +83,7 @@
     <!-- cors相关 -->
     <bean id="defaultCorsConfig" class="com.x.resume.gateway.web.CorsDomainConfiguration">
         <property name="maxAge" value="864000"/>
-        <property name="allowedOrigins" value="#{'${cors.allowedOrigins.default}'.split(',')}"/>
+<!--        <property name="allowedOrigins" value="#{'${cors.allowedOrigins.default}'.split(',')}"/>-->
         <property name="allowedMethods" value="*"/>
         <property name="allowedHeaders" value="*"/>
     </bean>

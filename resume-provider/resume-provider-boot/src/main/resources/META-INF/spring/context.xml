@@ -6,14 +6,13 @@
     <bean id="propertyPlaceholder" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"/>
 
     <bean id="environment" class="com.x.resume.common.model.Environment">
-        <property name="env" value="${info.env.name}"/>
+        <property name="env" value="${spring.profiles.active}"/>
     </bean>
 
     <import resource="classpath:/META-INF/spring/db.xml"/>
     <import resource="classpath:/META-INF/spring/jpa.xml"/>
     <import resource="classpath:/META-INF/spring/redis.xml"/>
-    <import resource="classpath:/META-INF/spring/monitor.xml"/>
-    <import resource="classpath:/META-INF/spring/im.xml"/>
     <import resource="classpath:/META-INF/spring/dubbo-provider.xml"/>
+    <import resource="classpath:/META-INF/spring/openai.xml"/>
 
 </beans>

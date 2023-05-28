@@ -3,7 +3,6 @@ package com.x.resume.provider;
 import com.alibaba.fastjson.PropertyNamingStrategy;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import com.x.resume.common.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 
-@EnableApolloConfig
 @ComponentScan(basePackages = {"com.x.resume"})
 @EnableTransactionManagement
 @EnableConfigurationProperties

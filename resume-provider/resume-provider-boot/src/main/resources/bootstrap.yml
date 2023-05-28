@@ -1,0 +1,59 @@
+info:
+  app:
+    name: ${APP_NAME:NOT_SET}
+    check: ${APP_CHECK:NOT_SET}
+  env:
+    name: ${ENV_NAME:NOT_SET}
+  hostname: ${HOSTNAME:NOT_SET}
+  captain:
+    seq: ${CAPTAIN_SEQ:NOT_SET}
+    gen: ${CAPTAIN_GEN:NOT_SET}
+  build:
+    name: ${BUILD_APP_NAME:NOT_SET}
+    git:
+      version: ${BUILD_GIT_VERSION:NOT_SET}
+      hash: ${BUILD_GIT_HASH:NOT_SET}
+    time: ${BUILD_TIME:NOT_SET}
+    timestamp: ${BUILD_TIMESTAMP:NOT_SET}
+
+spring:
+  application:
+    name: ${APP_NAME:resume-provider}
+  profiles:
+    active: ${ENV_NAME:dev-local}
+  cloud:
+    config:
+      name: ${spring.application.name}
+      label: ${CONFIG_BRANCH:main}
+      uri: ${CONFIG_SERVERS:http://127.0.0.1:8888}
+      fail-fast: true
+      prefix: ${spring.cloud.config.uri}/${spring.application.name}/${spring.profiles.active}/${spring.cloud.config.label}
+  main:
+    web_environment: false
+
+endpoints.metrics.filter:
+  gaugeSubmissions: PER_HTTP_METHOD
+  counterSubmissions: PER_HTTP_METHOD
+
+log:
+  kafka:
+    servers: 127.0.0.1:9092
+
+logging:
+  config: ${spring.cloud.config.prefix}/logback/${spring.application.name}.xml
+
+lockfile: /tmp/resume.lock
+
+---
+spring:
+  profiles: prd
+
+log:
+  kafka:
+    servers:
+
+---
+spring:
+  profiles: dev-local
+
+lockfile: /tmp/resume-service.lock

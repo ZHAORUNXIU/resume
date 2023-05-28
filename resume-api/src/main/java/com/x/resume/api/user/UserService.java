@@ -9,7 +9,7 @@ import java.util.List;
  * 用户Service
  *
  * @author runxiu.zhao
- * @date 2023-02-20 16:00:00
+ * @date 2023-05-20 16:00:00
  */
 public interface UserService {
 
@@ -32,18 +32,18 @@ public interface UserService {
     /**
      * 查询用户
      *
-     * @param uid 用户id
+     * @param userId 用户id
      * @return 用户
      */
-    Result<UserDO> getByUid(Long uid);
+    Result<UserDO> getByUserId(Long userId);
 
     /**
      * 查询用户
      *
-     * @param uid 用户id
+     * @param useerId 用户id
      * @return 用户
      */
-    Result<UserDO> getByUidDecode(Long uid);
+    Result<UserDO> getByUserIdDecode(Long userId);
 
     /**
      * 查询用户

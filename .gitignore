@@ -1,0 +1,33 @@
+# ignore maven etc
+*target
+
+# ignore idea etc
+*/bin/
+*out/
+*.idea
+*.iml
+rebel*.xml
+*.log
+.idea/*
+
+#other
+*.class
+*.jar
+*.war
+*.ear
+*.ipr
+*.iws
+
+!/src/
+!/doc/
+!/log/
+``
+log/
+.DS_Store
+LOG_ERROR_IS_UNDEFINED
+LOG_INFO_IS_UNDEFINED
+alphaex-tbs-web/LOG_INFO_IS_UNDEFINED
+LOG_BAKDIR_IS_UNDEFINED/
+.idea/
+ok.html
+.jpb/

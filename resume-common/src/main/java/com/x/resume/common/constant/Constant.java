@@ -6,7 +6,7 @@ import java.util.TimeZone;
  * Constant
  *
  * @author runxiu.zhao
- * @date 2023-02-21 10:00:00
+ * @date 2023-05-20 16:00:00
  */
 public interface Constant {
 
@@ -26,7 +26,7 @@ public interface Constant {
 
     String ID = "id";
 
-    String UID = "uid";
+    String USER_ID = "userId";
 
     /**
      * 默认北京时间东八区
@@ -36,7 +36,7 @@ public interface Constant {
     /**
      * 用户tokenKey
      */
-    String LOGIN_TOKEN = "RANKING-TOKEN";
+    String LOGIN_TOKEN = "RESUME-TOKEN";
 
     /**
      * 0开头正则

@@ -3,7 +3,6 @@ package com.x.resume.gateway;
 import com.alibaba.fastjson.PropertyNamingStrategy;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import com.x.resume.gateway.filter.ReqContextFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 import java.util.Locale;
 import java.util.TimeZone;
 
-@EnableApolloConfig
 @ComponentScan(value = "com.x.resume")
 @EnableConfigurationProperties
 @ImportResource({"classpath*:/META-INF/spring/context.xml"})

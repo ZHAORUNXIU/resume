@@ -4,19 +4,19 @@ package com.x.resume.types.user;
  * 用户状态
  *
  * @author runxiu.zhao
- * @date 2023-02-20 16:00:00
+ * @date 2023-05-20 16:00:00
  */
 public enum UserStateEnum {
 
     /**
      * 正常
      */
-    NORMAL(0),
+    NORMAL(1),
 
     /**
      * 禁用
      */
-    DISABLE(1),
+    DISABLE(0),
 
     /**
      * 注销

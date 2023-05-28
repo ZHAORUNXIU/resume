@@ -32,7 +32,7 @@ import static com.x.resume.common.util.Log.kv;
  * 用户Service
  *
  * @author runxiu.zhao
- * @date 2023-02-20 16:00:00
+ * @date 2023-05-20 16:00:00
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -74,12 +74,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result<UserDO> getByUid(Long uid) {
-        return null;
+    public Result<UserDO> getByUserId(Long userId) {
+        return userRepository.getByUserId(userId).map(Result::success).orElseGet(() -> Result.failure(UserCode.USER_NOT_FOUND));
     }
 
     @Override
-    public Result<UserDO> getByUidDecode(Long uid) {
+    public Result<UserDO> getByUserIdDecode(Long userId) {
         return null;
     }
 
@@ -117,21 +117,21 @@ public class UserServiceImpl implements UserService {
             return Result.failure(UserCode.USER_STATUS_LOCAL);
         }
 
-        String token = generateToken(user.getId());
+        String token = generateToken(user.getUserId());
         if (token == null) {
-            LOG.warn(format("生成token失败", kv("user_id", user.getId())));
+            LOG.warn(format("生成token失败", kv("user_id", user.getUserId())));
             return Result.failure(UserCode.LOGIN_FAILED);
         }
 
         int expireTime = (int) TimeUnit.MINUTES.toSeconds(tokenExpire);
         String tokenKey = RedisConstant.USER_LOGIN_TOKEN_KEY + token;
-        redisClient.setex(tokenKey, user.getId(), expireTime);
+        redisClient.setex(tokenKey, user.getUserId(), expireTime);
         return Result.success(token);
     }
 
     @Override
     public Result<Void> setGender(Long userId, Integer gender) {
-        Result<UserDO> result = this.get(userId);
+        Result<UserDO> result = this.getByUserId(userId);
         if (!result.isSuccess()) {
             return Result.failure(result);
         }
@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result<Void> setBirth(Long userId, Integer birth) {
-        Result<UserDO> result = this.get(userId);
+        Result<UserDO> result = this.getByUserId(userId);
         if (!result.isSuccess()) {
             return Result.failure(result);
         }
@@ -161,11 +161,20 @@ public class UserServiceImpl implements UserService {
      */
     private Result<UserDO> register(String phone) {
         UserDO userDO = new UserDO();
+        userDO.setUserId(this.generateUserId());
         userDO.setPhone(encode(phone.replaceAll(Constant.REGEX_ZERO_START, Text.EMPTY)));
         userDO.setState(UserStateEnum.NORMAL.getCode());
         userDO = userRepository.saveNotNull(userDO);
 
         return Result.success(userDO);
+    }
+
+    private Long generateUserId() {
+        Random random = new Random();
+        int min = 100000000;
+        int max = 999999999;
+        int userId = random.nextInt(max - min + 1) + min;
+        return Long.valueOf(userId);
     }
 
     /**

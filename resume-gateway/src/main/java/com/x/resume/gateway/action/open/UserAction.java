@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * 用户
  *
  * @author runxiu.zhao
- * @date 2023-02-20 16:00:00
+ * @date 2023-05-20 16:00:00
  */
 @RestController
 @RequestMapping(value = "/open/v1/user")
