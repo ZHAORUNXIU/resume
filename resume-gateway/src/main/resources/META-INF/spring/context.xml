@@ -6,5 +6,6 @@
     <import resource="classpath:/META-INF/spring/dubbo-consumer.xml"/>
     <import resource="classpath:/META-INF/spring/servlet.xml"/>
     <import resource="classpath:/META-INF/spring/redis.xml"/>
+    <import resource="classpath:/META-INF/spring/aliyun.xml"/>
 
 </beans>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="aliyunClient" class="com.x.resume.common.manager.aliyun.AliyunClient">
+        <property name="regionId" value="${aliyuncs.regionId:cn-hangzhou}"/>
+        <property name="accessKeyId" value="${aliyuncs.accessKey:NOT_SET}"/>
+        <property name="accessKeySecret" value="${aliyuncs.accessSecret:NOT_SET}"/>
+        <property name="signName" value="${aliyuncs.signName:NOT_SET}"/>
+        <property name="templateCode" value="${aliyuncs.templateCode:NOT_SET}"/>
+    </bean>
+
+</beans>

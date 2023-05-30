@@ -28,4 +28,9 @@ public interface UserCode {
      */
     int USER_STATUS_LOCAL = 2003;
 
+    /**
+     * 用户登录验证码尚未过期
+     */
+    int LOGIN_CODE_NOT_EXPIRED = 2004;
+
 }
