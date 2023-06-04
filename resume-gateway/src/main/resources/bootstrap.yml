@@ -30,6 +30,9 @@ spring:
       prefix: ${spring.cloud.config.uri}/${spring.application.name}/${spring.profiles.active}/${spring.cloud.config.label}
   main:
     web_environment: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 endpoints.metrics.filter:
   gaugeSubmissions: PER_HTTP_METHOD

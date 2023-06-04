@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService {
 
     private static final String LOG_PREFIX = "用户管理:";
 
-    @Resource
-    private Environment environment;
+//    @Resource
+//    private Environment environment;
 
     @Resource
     private UserRepository userRepository;
@@ -113,8 +113,8 @@ public class UserServiceImpl implements UserService {
         }
 
         if (!user.getState().equals(UserStateEnum.NORMAL.getCode())) {
-            LOG.warn(format("用户状态异常", kv("user_id", user.getId()), kv("state", user.getState())));
-            return Result.failure(UserCode.USER_STATUS_LOCAL);
+            LOG.warn(format("用户状态不可用", kv("user_id", user.getId()), kv("state", user.getState())));
+            return Result.failure(UserCode.USER_STATUS_DISABLE);
         }
 
         String token = generateToken(user.getUserId());
@@ -202,14 +202,14 @@ public class UserServiceImpl implements UserService {
      */
     private Result<Void> checkCode(String phone, String code) {
         // 测试环境忽略密码判断
-        if ((environment.isDev() || environment.isLocal()) && Constant.DEFAULT_CODE.equals(code)) {
-            return Result.success(null);
-        }
+//        if ((environment.isDev() || environment.isLocal()) && Constant.DEFAULT_CODE.equals(code)) {
+//            return Result.success(null);
+//        }
         String key = RedisConstant.USER_LOGIN_CODE_KEY + phone;
         String redisCode = redisClient.get(key);
         if (Text.isEmpty(redisCode) || !redisCode.equals(code)) {
             LOG.warn(Log.format("用户登录验证码错误", Log.kv("code", code), Log.kv("redisCode", redisCode)));
-            //return Result.failure(UserCode.LOGIN_CODE_INCORRECT);
+            return Result.failure(UserCode.LOGIN_CODE_INCORRECT);
         }
         return Result.success(null);
     }

@@ -24,9 +24,9 @@ public interface UserCode {
     int LOGIN_CODE_INCORRECT = 2002;
 
     /**
-     * 用户状态异常
+     * 用户状态不可用
      */
-    int USER_STATUS_LOCAL = 2003;
+    int USER_STATUS_DISABLE = 2003;
 
     /**
      * 用户登录验证码尚未过期

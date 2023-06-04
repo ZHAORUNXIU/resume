@@ -10,9 +10,9 @@
 
     <bean id="propertyPlaceholder" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"/>
 
-    <bean id="environment" class="com.x.resume.common.model.Environment">
-        <property name="env" value="${spring.profiles.active}"/>
-    </bean>
+<!--    <bean id="environment" class="com.x.resume.common.model.Environment">-->
+<!--        <property name="env" value="${spring.profiles.active}"/>-->
+<!--    </bean>-->
 
     <bean class="com.x.resume.gateway.filter.ReqContextFilter"/>
 
