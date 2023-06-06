@@ -69,8 +69,10 @@ public class UserAction {
     @PostMapping("/login")
     @TrafficControl(type = TrafficControlType.IP, threshold = 1000)
     @ApiOperation(value = "用户登录", notes = "未注册用户自动注册")
-    @ApiResponses({@ApiResponse(code = 404, response = String.class, message = "接口不存在"),
-            @ApiResponse(code = 500, response = String.class, message = "程序错误")})
+    @ApiResponses({ @ApiResponse(code = 2001,  message = "程序错误，用户登录失败"),
+            @ApiResponse(code = 2002,  message = "用户登录验证码错误"),
+            @ApiResponse(code = 2003,  message = "用户状态不可用"),
+            @ApiResponse(code = 200, response = Result.class, message = "登录成功")})
     public Result<LoginResp> login(@Validated @RequestBody LoginReq req) {
         Result<String> loginResult = userService.login(req.getPhone(), req.getCode());
         if (!loginResult.isSuccess()) {
@@ -87,6 +89,9 @@ public class UserAction {
     @GetMapping("/send")
     @TrafficControl(type = TrafficControlType.IP, threshold = 1000)
     @ApiOperation(value = "发送登录验证码", notes = "登录前的短信验证")
+    @ApiResponses({@ApiResponse(code = 2004,  message = "用户登录验证码尚未过期"),
+            @ApiResponse(code = 500,  message = "由于系统维护，信息发送失败"),
+            @ApiResponse(code = 200, response = Result.class, message = "发送成功")})
     public Result<Void> sendLoginCode(@RequestParam(required = true) @NotNull @Length(min = 9, max = 12) String phone) {
 
         String key = RedisConstant.USER_LOGIN_CODE_KEY + phone;

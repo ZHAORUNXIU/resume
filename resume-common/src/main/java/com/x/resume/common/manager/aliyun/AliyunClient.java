@@ -9,6 +9,8 @@ import com.aliyuncs.CommonResponse;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import com.x.resume.common.constant.Code;
+import com.x.resume.common.constant.UserCode;
 import com.x.resume.common.model.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,10 +82,11 @@ public class AliyunClient {
             return Result.success(response.getHttpResponse().isSuccess());
         } catch (ServerException e) {
             LOG.warn(format("由于系统维护，信息发送失败"), e);
+            return Result.failure(Code.SYSTEM_ERROR);
         } catch (ClientException e) {
             LOG.warn(format("由于系统维护，信息发送失败"), e);
+            return Result.failure(Code.SYSTEM_ERROR);
         }
-        return Result.success(Boolean.TRUE);
     }
 
 
