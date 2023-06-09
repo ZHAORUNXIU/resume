@@ -2,6 +2,7 @@ package com.x.resume.api.user;
 
 import com.x.resume.common.model.Result;
 import com.x.resume.model.domain.user.UserDO;
+import com.x.resume.model.domain.user.UserMongoDO;
 
 import java.util.List;
 
@@ -80,4 +81,5 @@ public interface UserService {
      */
     Result<Void> setBirth(Long userId, Integer birth);
 
+    Result<String> addToMongo(UserMongoDO userMongoDO);
 }

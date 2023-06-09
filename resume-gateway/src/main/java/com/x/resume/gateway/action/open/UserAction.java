@@ -14,7 +14,9 @@ import com.x.resume.gateway.resp.user.LoginResp;
 import com.x.resume.gateway.traffic.TrafficControl;
 import com.x.resume.gateway.traffic.TrafficControlType;
 import com.x.resume.common.model.Result;
+import com.x.resume.model.domain.user.UserMongoDO;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
@@ -95,6 +97,21 @@ public class UserAction {
         redisClient.setex(key, code, expireTime);
 
         return Result.success(null);
+    }
+
+    /**
+     * mongo test: Add to MongoDB
+     */
+    @PostMapping("/mongo/add")
+    @TrafficControl(type = TrafficControlType.IP, threshold = 1000)
+    public Result<String> addToMongo(@Validated @RequestBody AddToMongoReq req) {
+        UserMongoDO userMongoDO = new UserMongoDO();
+        BeanUtils.copyProperties(req, userMongoDO);
+        Result<String> result = userService.addToMongo(userMongoDO);
+        if (!result.isSuccess()) {
+            return Result.failure(result);
+        }
+        return Result.success(result.getData());
     }
 
 //    /**

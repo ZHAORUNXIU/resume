@@ -12,6 +12,8 @@ import com.x.resume.common.util.Log;
 import com.x.resume.common.util.Text;
 import com.x.resume.common.util.TokenEncryptUtil;
 import com.x.resume.model.domain.user.UserDO;
+import com.x.resume.model.domain.user.UserMongoDO;
+import com.x.resume.provider.repository.UserMongoRepository;
 import com.x.resume.provider.repository.UserRepository;
 import com.x.resume.types.user.UserStateEnum;
 import org.slf4j.Logger;
@@ -41,11 +43,14 @@ public class UserServiceImpl implements UserService {
 
     private static final String LOG_PREFIX = "用户管理:";
 
-    @Resource
-    private Environment environment;
+//    @Resource
+//    private Environment environment;
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    private UserMongoRepository userMongoRepository;
 
     @Resource
     private RedisClient redisClient;
@@ -153,6 +158,13 @@ public class UserServiceImpl implements UserService {
         return Result.success(null);
     }
 
+    @Override
+    public Result<String> addToMongo(UserMongoDO userMongoDO) {
+        userMongoDO.setUserId(generateUserId());
+        userMongoDO = userMongoRepository.save(userMongoDO);
+        return Result.success(userMongoDO.getId());
+    }
+
     /**
      * 注册
      *
@@ -202,14 +214,14 @@ public class UserServiceImpl implements UserService {
      */
     private Result<Void> checkCode(String phone, String code) {
         // 测试环境忽略密码判断
-        if ((environment.isDev() || environment.isLocal()) && Constant.DEFAULT_CODE.equals(code)) {
-            return Result.success(null);
-        }
+//        if ((environment.isDev() || environment.isLocal()) && Constant.DEFAULT_CODE.equals(code)) {
+//            return Result.success(null);
+//        }
         String key = RedisConstant.USER_LOGIN_CODE_KEY + phone;
         String redisCode = redisClient.get(key);
         if (Text.isEmpty(redisCode) || !redisCode.equals(code)) {
             LOG.warn(Log.format("用户登录验证码错误", Log.kv("code", code), Log.kv("redisCode", redisCode)));
-            //return Result.failure(UserCode.LOGIN_CODE_INCORRECT);
+            return Result.failure(UserCode.LOGIN_CODE_INCORRECT);
         }
         return Result.success(null);
     }

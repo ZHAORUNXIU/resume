@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -21,10 +22,12 @@ import java.io.IOException;
 import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 
-@ComponentScan(basePackages = {"com.x.resume"})
-@EnableTransactionManagement
-@EnableConfigurationProperties
+//@ComponentScan(basePackages = {"com.x.resume"})
+//@EnableTransactionManagement
+//@EnableConfigurationProperties
 @ImportResource("classpath*:/META-INF/spring/context.xml")
+
+@SpringBootApplication
 public class ProviderMain {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProviderMain.class);
